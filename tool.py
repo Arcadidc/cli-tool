@@ -98,7 +98,7 @@ def workflow(data, output_path, API_URL):
         """       
         
         # Create a random number of elements between 10 and 100
-        num_elements = random.randint(10, 20)
+        num_elements = random.randint(10, 100)
         
         for _ in range(num_elements):
             data['text'] = str(_)
