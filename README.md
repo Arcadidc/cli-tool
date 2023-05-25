@@ -12,17 +12,19 @@ This is a cli-tool in order to interact with the [TODO app](https://github.com/s
  
  You have different options with this tool
     
-- Get all ToDo available in the database, using the flag `--get` or `-g`. You will be also able to select if you want it in json,txt or as a table (by default json). With this command you can also add --path and point where do you want this file.
+- Get all ToDo available in the database, using the flag `--get` or `-g`. You will be also able to select if you want it in json,txt or as a table (by default json). With this command you can also add --path and point where do you want this file. **Example:
 
     >  python tool.py --get json 
 
-- Add a new ToDo in the database, using the flag `--add` or `-a`.
+- Add a new Todo in the database, using the flag `--add` or `-a`. **Example:
 
      > python tool.py --add NewTodo
 
-- Delete an existing ToDo from the database, using the flag `--delete` or `-d`.
+- Delete an existing ToDo from the database, using the flag `--delete` or `-d`. You will also need to pass the ID. **Example:
 
      > python tool.py --delete 54454
     
-- Execute a Workflow , currently it creates a number of ToDo randomly between 0 and 100. After adding the ToDos in the database, it  stores all the information about the ToDo in the differents formats (JSON, TXT, Table) and finally it deletes all the ToDos created during this workflow.
+- Execute a Workflow , currently it creates a number of ToDo randomly between 0 and 100. After adding the ToDos in the database, it  stores all the information about the ToDo in the differents formats (JSON, TXT, Table) and finally it deletes all the ToDos created during this workflow. **Example:
+
+     > python tool.py -w
 
