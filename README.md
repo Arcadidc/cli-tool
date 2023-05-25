@@ -12,15 +12,15 @@ This is a cli-tool in order to interact with the [TODO app](https://github.com/s
  
  You have different options with this tool
     
-- Get all ToDo available in the database, using the flag --get or -g. You will be also able to select if you want it in json,txt or as a table (by default json). With this command you can also add --path and point where do you want this file.
+- Get all ToDo available in the database, using the flag `--get` or `-g`. You will be also able to select if you want it in json,txt or as a table (by default json). With this command you can also add --path and point where do you want this file.
 
     >  python tool.py --get json 
 
-- Add a new ToDo in the database, using the flag --add or -a.
+- Add a new ToDo in the database, using the flag `--add` or `-a`.
 
      > python tool.py --add NewTodo
 
-- Delete an existing ToDo from the database, using the flag --delete or -d.
+- Delete an existing ToDo from the database, using the flag `--delete` or `-d`.
 
      > python tool.py --delete 54454
     
