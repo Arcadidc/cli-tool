@@ -4,7 +4,7 @@
 This is a cli-tool in order to interact with the [TODO app](https://github.com/scotch-io/node-todo). I changed some things in that repository (can be found [here](https://github.com/Arcadidc/minikube-node-todo)) with the changes explained. 
 
 ## First steps:
- - First of all check for the config.ini file, where you will be able to edit the IP in order to connect to the API. If you followed the steps correctly , it should be available in your host machine. 
+ - First of all check for the config.ini file, where you will be able to edit the IP in order to connect to the API. If you followed the steps correctly you should be available to access in your host machine. 
 
  - After that, enjoy! You will be able to execute it using `python tool.py` if you have set the  Python environment correctly. I put all the dependencies in the `requirements.txt` file. 
  
