@@ -3,16 +3,22 @@ import time
 import json
 import requests
 import argparse
+import random
 from tabulate import tabulate
 
-API_URL = "http://172.23.212.136:31856/api/todos"
+API_URL = "http://172.17.54.90:31856/api/todos"
 
 
-def make_api_request(data=None):
-    if data is None:
+def make_api_request(method, data=None):
+    if method == "get":
         response = requests.get(API_URL)
-    else:
+    elif method == "post":
         response = requests.post(API_URL, json=data)
+    elif method == "delete":
+        response = requests.delete(API_URL)
+    else:
+        print("Invalid method. Please choose either 'get', 'post', or 'delete'")
+        return None
 
     if response.status_code == 200:
         data = response.json()
@@ -21,7 +27,7 @@ def make_api_request(data=None):
         print(f"Request failed with status code {response.status_code}")
         return None
 
-## This will transform the JSON into a .TXT or a Table if the user requested it.
+## This will transform the JSON into a .TXT or  Table
 def save_output(data, output_format, output_path):
     if output_format == "json":
         file_path = os.path.join(output_path, "output.json")
@@ -39,28 +45,65 @@ def save_output(data, output_format, output_path):
         headers = data[0].keys() if data else []
         rows = [list(item.values()) for item in data]
         table = tabulate(rows, headers, tablefmt="grid")
-        file_path = os.path.join(output_path, "output.txt")
+        file_path = os.path.join(output_path, "output_table.txt")
         with open(file_path, "w") as f:
             f.write(table)
         print(f"Output saved as {file_path}")
     else:
         print("Invalid output format. Please choose either 'json', 'txt', or 'table'.")
 
+def workflow(data, output_path):
+        # Create a random number of elements between 10 and 100
+        num_elements = random.randint(10, 100)
+        for _ in range(num_elements):
+            make_api_request("post", data)
+
+        # Get all elements in JSON format
+        json_data = make_api_request("get")
+        if json_data:
+            save_output(json_data, "json", output_path)
+
+        # Get all elements in text format
+        text_data = json.dumps(json_data, indent=4)
+        if text_data:
+            save_output(text_data, "txt", output_path)
+
+        # Get all elements in table format
+        table_data = json_data
+        if table_data:
+            save_output(table_data, "table", output_path)
+
+        # Clean all stored elements
+        make_api_request("delete")
+        print("All elements deleted from the backend")
+
+
 
 def main():
+# Create the Parser and add all the arguments needed (Gets, add, delete, workflow). Also added Path, in case you want to change it.
+
     parser = argparse.ArgumentParser(description="CLI tool for making API requests")
+
     parser.add_argument("--output", "-o", choices=["json", "txt", "table"], default="json", help="Output format (json, txt, or table)")
     parser.add_argument("--path", "-p", default="./", help="Destination path for the output file")
-    parser.add_argument("--data", "-d", help="Data to be sent to the backend as a JSON string")
+    parser.add_argument("--add", "-a", help="Data to be sent to the backend as string")
+    parser.add_argument("--delete", "-d", help="Data to be deleted from the database")
+    parser.add_argument("--workflow", "-w", action="store_true", help="Execute the workflow")
 
     args = parser.parse_args()
     output_format = args.output
-    output_path = args.path
-    data = json.loads(args.data) if args.data else None
+    output_path = args.path 
+    data = json.loads(args.add) if args.add else None
 
-    result = make_api_request(data)
-    if result:
-        save_output(result, output_format, output_path)
+# Depending on the arguments the functions will be thrown.
+    if args.workflow:
+         workflow(data, output_path)
+    elif args.output:
+        save_output(make_api_request("get"),output_format,args.path)
+    elif args.add:
+        make_api_request("POST", data)
+    elif args.delete:
+        make_api_request("DELETE",data)
 
 if __name__ == "__main__":
     main()
