@@ -10,10 +10,19 @@ from urllib3.util.retry import Retry
 import configparser
 
 
-
-
-
 def make_api_request(method, API_URL, data=None):
+
+    """
+    Makes an API request using the specified method and API URL.
+
+    Args:
+        method (str): The HTTP method to use ('get', 'post', or 'delete').
+        API_URL (str): The URL of the API that we got from config.ini.
+        data (dict): The data to be sent with the request (for 'post' or 'delete' method).
+
+    Returns:
+        dict or None: The response data in JSON format if the request is successful, None otherwise.
+    """
 
     session = requests.Session()
     retry = Retry(connect=4, backoff_factor=0.7)
@@ -32,14 +41,24 @@ def make_api_request(method, API_URL, data=None):
         return None
 
     if response.status_code == 200:
+        print(f"Request successful!")
         data = response.json()
         return data
     else:
         print(f"Request failed with status code {response.status_code}")
         return None
 
-## This will transform the JSON into a .TXT or  Table
 def save_output(data, output_format, output_path):
+
+    """
+    Saves the data to an output file based on the specified format.
+
+    Args:
+        data: The data to be saved.
+        output_format (str): The output format (json, txt, or table).
+        output_path (str): The destination path for the output file.
+    """
+
     if output_format == "json":
         file_path = os.path.join(output_path, "output.json")
         with open(file_path, "w") as f:
@@ -63,37 +82,49 @@ def save_output(data, output_format, output_path):
     else:
         print("Invalid output format. Please choose either 'json', 'txt', or 'table'.")
 
-def workflow(data, output_path):
+def workflow(data, output_path, API_URL):
+        
+        """
+        Executes a workflow consisting of multiple steps:
+        1. Creates a random number of elements in the backend.
+        2. Gets all elements in JSON format and saves it to a file.
+        3. Gets all elements in text format and saves it to a file.
+        4. Gets all elements in table format and saves it to a file.
+        5. Deletes all stored elements from the backend.
+
+        Args:
+            data (dict): Data to be sent to the backend.
+            output_path (str): Destination path for output files.
+        """       
+        
         # Create a random number of elements between 10 and 100
-        num_elements = random.randint(10, 100)
+        num_elements = random.randint(10, 20)
         
         for _ in range(num_elements):
-            data['text'] = _
-            make_api_request("post", data)
+            data['text'] = str(_)
+            make_api_request("post",API_URL , data)
 
-        # Get all elements in JSON format
-        json_data = make_api_request("get")
+        # Step 2: Get all elements in JSON format and save it to a file.
+        json_data = make_api_request("get", API_URL)
         if json_data:
             save_output(json_data, "json", output_path)
 
-        # Get all elements in text format
+        # Step 3: Get all elements in text format save it to a file.
         text_data = json.dumps(json_data, indent=4)
         if text_data:
             save_output(text_data, "txt", output_path)
 
-        # Get all elements in table format
+        # Step 4: Get all elements in table format and save it to a file.
         table_data = json_data
         if table_data:
             save_output(table_data, "table", output_path)
 
-        #Clean all stored elements , we already have it so no need to reask for it
+        # Step 5: Clean all stored elements generated during the workflow
         for obj in json_data:
             if '_id' in obj:
-                make_api_request("delete",obj['_id'])
+                make_api_request("delete",API_URL,obj['_id'])   
 
-        print("All elements deleted from the backend!")
-
-
+        print("All elements have been deleted from the backend!")
 
 def main():
 
@@ -125,14 +156,13 @@ def main():
 
     # Execute corresponding functions based on the arguments
     if args.workflow:
-        workflow(data, output_path)
+        workflow(data, output_path, API_URL)
     elif args.add:
-        make_api_request("post", API_URL, data)
+        print(make_api_request("post", API_URL, data))
     elif args.delete:
         make_api_request("delete", API_URL, args.delete)
     elif args.get:
         save_output(make_api_request("get", API_URL), output_format, output_path)
     
-
 if __name__ == "__main__":
     main()
