@@ -5,17 +5,27 @@ import requests
 import argparse
 import random
 from tabulate import tabulate
+from requests.adapters import HTTPAdapter
+from urllib3.util.retry import Retry
 
 API_URL = "http://172.17.54.90:31856/api/todos"
 
 
+
 def make_api_request(method, data=None):
+
+    session = requests.Session()
+    retry = Retry(connect=4, backoff_factor=0.7)
+    adapter = HTTPAdapter(max_retries=retry)
+    session.mount('http://', adapter)
+
     if method == "get":
-        response = requests.get(API_URL)
+        response = session.get(API_URL)
     elif method == "post":
-        response = requests.post(API_URL, json=data)
+        response = session.post(API_URL, data)
     elif method == "delete":
-        response = requests.delete(API_URL)
+        url = str(API_URL) + "/" + str(data)
+        response = session.delete(url)
     else:
         print("Invalid method. Please choose either 'get', 'post', or 'delete'")
         return None
@@ -54,8 +64,10 @@ def save_output(data, output_format, output_path):
 
 def workflow(data, output_path):
         # Create a random number of elements between 10 and 100
-        num_elements = random.randint(10, 100)
+        num_elements = random.randint(5, 10)
+        
         for _ in range(num_elements):
+            data['text'] = _
             make_api_request("post", data)
 
         # Get all elements in JSON format
@@ -73,9 +85,12 @@ def workflow(data, output_path):
         if table_data:
             save_output(table_data, "table", output_path)
 
-        # Clean all stored elements
-        make_api_request("delete")
-        print("All elements deleted from the backend")
+        #Clean all stored elements , we already have it so no need to reask for it
+        for obj in json_data:
+            if '_id' in obj:
+                make_api_request("delete",obj['_id'])
+
+        print("All elements deleted from the backend!")
 
 
 
@@ -84,26 +99,33 @@ def main():
 
     parser = argparse.ArgumentParser(description="CLI tool for making API requests")
 
-    parser.add_argument("--output", "-o", choices=["json", "txt", "table"], default="json", help="Output format (json, txt, or table)")
+    parser.add_argument("--get", "-g", choices=["json", "txt", "table"], default="json", help="Output format (json, txt, or table)")
     parser.add_argument("--path", "-p", default="./", help="Destination path for the output file")
     parser.add_argument("--add", "-a", help="Data to be sent to the backend as string")
     parser.add_argument("--delete", "-d", help="Data to be deleted from the database")
     parser.add_argument("--workflow", "-w", action="store_true", help="Execute the workflow")
 
     args = parser.parse_args()
-    output_format = args.output
+    output_format = args.get
     output_path = args.path 
-    data = json.loads(args.add) if args.add else None
+   
+    if args.add or args.workflow:
+        data = {
+            'text': args.add,
+            'done': False}
+
 
 # Depending on the arguments the functions will be thrown.
     if args.workflow:
          workflow(data, output_path)
-    elif args.output:
-        save_output(make_api_request("get"),output_format,args.path)
     elif args.add:
-        make_api_request("POST", data)
+        make_api_request("post", data)
     elif args.delete:
-        make_api_request("DELETE",data)
+        print(data)
+        make_api_request("delete", args.delete)
+    elif args.get:
+        save_output(make_api_request("get"),output_format,args.path)
+    
 
 if __name__ == "__main__":
     main()
