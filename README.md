@@ -1,7 +1,7 @@
 
 # CLI-Tool for the TODO app!
 
-This is a cli-tool in order to interact with the [TODO app](https://github.com/scotch-io/node-todo). I changed some things in that repository (can be found [here](https://github.com/Arcadidc/minikube-node-todo)) with the changes explained. 
+This is a cli-tool in order to interact with the [TODO app](https://github.com/Arcadidc/minikube-node-todo). I changed some things from the original repository that can be found [here!](https://github.com/scotch-io/node-todo) with the changes explained. 
 
 ## First steps:
  - First of all check for the config.ini file, where you will be able to edit the IP in order to connect to the API. If you followed the steps correctly you should be available to access in your host machine. 
@@ -20,11 +20,11 @@ This is a cli-tool in order to interact with the [TODO app](https://github.com/s
 
      > python tool.py --add NewTodo
 
-- Delete an existing ToDo from the database, using the flag `--delete` or `-d`. You will also need to pass the ID.  **Example:**
+- Delete an existing Todo from the database, using the flag `--delete` or `-d`. You will also need to pass the ID.  **Example:**
 
      > python tool.py --delete 54454
     
-- Execute a Workflow , currently it creates a number of ToDo randomly between 0 and 100. After adding the ToDos in the database, it  stores all the information about the ToDo in the differents formats (JSON, TXT, Table) and finally it deletes all the ToDos created during this workflow.  **Example:**
+- Execute a Workflow , currently it creates a number of Todo randomly between 0 and 100. After adding the ToDos in the database, it  stores all the information about the Todo in the differents formats (JSON, TXT, Table) and finally it deletes all the ToDos created during this workflow.  **Example:**
 
      > python tool.py -w
 
