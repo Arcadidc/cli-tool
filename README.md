@@ -1,5 +1,5 @@
 
-# CLI-TOOl for the TODO app!
+# CLI-Tool for the TODO app!
 
 This is a cli-tool in order to interact with the [TODO app](https://github.com/scotch-io/node-todo). I changed some things in that repository (can be found [here](https://github.com/Arcadidc/minikube-node-todo)) with the changes explained. 
 
