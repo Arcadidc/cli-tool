@@ -12,7 +12,7 @@ This is a cli-tool in order to interact with the [TODO app](https://github.com/s
  
  You have different options with this tool
     
-- Get all ToDo available in the database, using the flag `--get` or `-g`. You will be also able to select if you want it in json,txt or as a table (by default json). With this command you can also add --path and point where do you want this file. **Example:
+- Get all Todo available in the database, using the flag `--get` or `-g`. You will be also able to select if you want it in json,txt or as a table (by default json). With this command you can also add --path and point where do you want this file. **Example:
 
     >  python tool.py --get json 
 
