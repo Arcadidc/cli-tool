@@ -6,7 +6,7 @@ This is a cli-tool in order to interact with the [TODO app](https://github.com/A
 ## First steps:
  - First of all check for the config.ini file, where you will be able to edit the IP in order to connect to the API. If you followed the steps correctly from the other project you should be available to access from your host machine. 
 
- - After that, enjoy! You will be able to execute it using `python tool.py`. I put all the dependencies in the `requirements.txt` file. 
+ - After that, enjoy! You will be able to execute it using `python3 tool.py`. I put all the dependencies in the `requirements.txt` file. 
  
  ## How to use it:
  
@@ -14,17 +14,17 @@ This is a cli-tool in order to interact with the [TODO app](https://github.com/A
     
 - Get all Todo available in the database, using the flag `--get` or `-g`. You will be also able to select if you want it in json,txt or as a table (by default json). With this command you can also add --path and point where do you want this file. **Example:**
 
-    >  python tool.py --get json 
+    >  python3 tool.py --get json 
 
 - Add a new Todo in the database, using the flag `--add` or `-a`. **Example:**
 
-     > python tool.py --add NewTodo
+     > python3 tool.py --add NewTodo
 
 - Delete an existing Todo from the database, using the flag `--delete` or `-d`. You will also need to pass the ID.  **Example:**
 
-     > python tool.py --delete 54454
+     > python3 tool.py --delete 54454
     
 - Execute a Workflow , using the flag  `--workflow` or `-w`. It creates a number of Todo randomly between 0 and 100. After adding all the Todo in the database, it  stores all the information  in differents formats (JSON, TXT, Table) and finally it deletes all the Todos.  **Example:**
 
-     > python tool.py -w
+     > python3 tool.py -w
 
