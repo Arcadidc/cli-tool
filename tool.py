@@ -25,7 +25,7 @@ def make_api_request(method, API_URL, data=None):
     """
 
     session = requests.Session()
-    retry = Retry(connect=4, backoff_factor=0.7)
+    retry = Retry(connect=10, backoff_factor=1)
     adapter = HTTPAdapter(max_retries=retry)
     session.mount('http://', adapter)
 
