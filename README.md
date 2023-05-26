@@ -6,7 +6,7 @@ This is a cli-tool in order to interact with the [TODO app](https://github.com/A
 ## First steps:
  - First of all check for the config.ini file, where you will be able to edit the IP in order to connect to the API. If you followed the steps correctly from the other project you should be available to access from your host machine. 
 
- - After that, you will need to install de dependencies found in `requirements.txt` with `pip install -r requirements.txt`. After that you will be able to execute it using `python3 tool.py`.
+ - After that, you will need to install de dependencies that can be found in the file `requirements.txt` with the command `pip install -r requirements.txt`. After that you will be able to execute it using `python3 tool.py`.
  
  ## How to use it:
  
