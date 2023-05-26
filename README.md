@@ -1,7 +1,7 @@
 
 # CLI-Tool for the TODO app!
 
-This is a cli-tool in order to interact with the [TODO app](https://github.com/Arcadidc/minikube-node-todo). I changed some things from the [original](https://github.com/scotch-io/node-todo) repository. 
+This is a cli-tool in order to interact with the [TODO app](https://github.com/Arcadidc/minikube-node-todo). I changed some things from the [original](https://github.com/scotch-io/node-todo) repository. To make this application work you first should have your minikube cluster running and accessible.
 
 ## First steps:
  - First of all check for the config.ini file, where you will be able to edit the IP in order to connect to the API. If you followed the steps correctly from the other project you should be available to access your host machine. 
