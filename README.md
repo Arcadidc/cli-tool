@@ -24,7 +24,7 @@ This is a cli-tool in order to interact with the [TODO app](https://github.com/A
 
      > python tool.py --delete 54454
     
-- Execute a Workflow , currently it creates a number of Todo randomly between 0 and 100. After adding the ToDos in the database, it  stores all the information about the Todo in the differents formats (JSON, TXT, Table) and finally it deletes all the ToDos created during this workflow.  **Example:**
+- Execute a Workflow ( Command `--workflow` or `-w`) , currently it creates a number of Todo randomly between 0 and 100. After adding all the Todo in the database, it  stores all the information  in differents formats (JSON, TXT, Table) and finally it deletes all the Todos created during this workflow.  **Example:**
 
      > python tool.py -w
 
